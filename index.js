@@ -91,6 +91,23 @@ async function run() {
       res.send(result)
      })
 
+     app.put("/api/users/:id",async(req,res)=>{
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const updateUserInfo = req.body;
+      console.log(updateUserInfo);
+      const userInfo = {
+        $set: {
+          userName:updateUserInfo.userName,
+          userDesignation:updateUserInfo.userDesignation,
+          userDepartment:updateUserInfo.userDepartment,
+          useCompanyName:updateUserInfo.useCompanyName,
+        },
+      };
+      const result = await userCollection.updateOne(filter, userInfo);
+      res.send(result);
+    })
+
      app.patch("/api/users/:id",async(req,res)=>{
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
